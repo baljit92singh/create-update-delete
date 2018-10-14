@@ -4,19 +4,19 @@
     <mat-card-content>
       <form [formGroup]="contactForm" novalidate>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Enter full name" formControlName="name">
+          <input matInput placeholder="Enter full name" formControlName="name" required>
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input matInput placeholder="Enter email" formControlName="email">
         </mat-form-field>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Enter number" formControlName="contactNumber">
+          <input matInput placeholder="Enter number" formControlName="contactNumber" required>
         </mat-form-field>
       </form>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" *ngIf="mode === 'new'" (click)="saveContact()">SAVE</button>
-      <button mat-raised-button color="primary" *ngIf="mode === 'edit'" (click)="updateContact()">UPDATE</button>
+      <button mat-raised-button color="primary" *ngIf="mode === 'new'" [disabled]="contactForm.invalid" (click)="saveContact()">SAVE</button>
+      <button mat-raised-button color="primary" *ngIf="mode === 'edit'" [disabled]="contactForm.invalid" (click)="updateContact()">UPDATE</button>
       <button mat-raised-button (click)="resetForm()">RESET</button>
     </mat-card-actions>
     <mat-card-title *ngIf="this.recentList.length>0">Contact List</mat-card-title>
@@ -32,7 +32,7 @@
       <tbody>
         <tr *ngFor="let item of recentList">
           <td class="mdl-data-table__cell--non-numeric">{{item.name}}</td>
-          <td class="mdl-data-table__cell--non-numeric">{{item.email}}</td>
+          <td class="mdl-data-table__cell--non-numeric">{{item.email ? item.email : "--"}}</td>
           <td class="mdl-data-table__cell--non-numeric">{{item.contactNumber}}</td>
           <td class="mdl-data-table__cell--non-numeric table-item-actions">
             <button mat-icon-button color="primary" (click)=editContact(item)>
